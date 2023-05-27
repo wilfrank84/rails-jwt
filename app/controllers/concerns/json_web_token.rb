@@ -10,7 +10,11 @@ module JsonWebToken
   end
 
   def jwt_decode(token)
-    decode = JWT.decode(token, SECRET_KEY)[0]
-    HashWithIndifferentAccess.new decode
+    begin
+      decode = JWT.decode(token, SECRET_KEY)[0]
+      HashWithIndifferentAccess.new decode
+    rescue
+      puts "Unable to decode token."
+    end
   end
 end
